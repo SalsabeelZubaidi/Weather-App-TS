@@ -34,6 +34,29 @@ interface WeatherResponse {
   current: CurrentWeatherData;
 }
 
+// Map weather conditions to static image filenames
+function getWeatherImage(condition: string): string {
+  const lowerCaseCondition = condition.toLowerCase();
+  
+  if (lowerCaseCondition.includes('sunny') || lowerCaseCondition.includes('clear')) {
+    return '/images/weatherState/sunny.png';
+  } else if (lowerCaseCondition.includes('partly cloudy') || lowerCaseCondition.includes('overcast') || lowerCaseCondition.includes('cloudy')) {
+    return '/images/weatherState/tt.png';
+  } else if (lowerCaseCondition.includes('rain') || lowerCaseCondition.includes('drizzle') || lowerCaseCondition.includes('shower')) {
+    return '/images/weatherState/rainy.png';
+  } else if (lowerCaseCondition.includes('snow') || lowerCaseCondition.includes('sleet')) {
+    return '/images/weatherState/snowy.png';
+  } else if (lowerCaseCondition.includes('thunder') || lowerCaseCondition.includes('lightning')) {
+    return '/images/weatherState/thunder.png';
+  } else if (lowerCaseCondition.includes('clear')) {
+    return '/images/weatherState/clear.png';
+  }
+  else {
+    // Default to clear if condition not recognized
+    return '/images/weatherState/clear.png';
+  }
+}
+
 export async function fetchWeather(city: string, days: number = 5): Promise<WeatherResponse> {
   try {
     const origin = typeof window !== "undefined" ? window.location.origin : "";
@@ -62,7 +85,7 @@ export async function fetchWeather(city: string, days: number = 5): Promise<Weat
 
       weather: {
         description: day.day.condition.text,
-        icon: day.day.condition.icon,
+        icon: getWeatherImage(day.day.condition.text),
       },
     }));
 
@@ -76,7 +99,7 @@ export async function fetchWeather(city: string, days: number = 5): Promise<Weat
 
       weather: {
         description: data.current.condition.text,
-        icon: data.current.condition.icon,
+        icon: getWeatherImage(data.current.condition.text),
       },
       location: {
         name: data.location.name,
