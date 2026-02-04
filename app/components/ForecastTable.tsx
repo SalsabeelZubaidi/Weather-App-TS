@@ -70,14 +70,47 @@ export default function ForecastTable({ cityName, isCelsius }: ForecastTableProp
   );
 
   return (
-      <div className="flex flex-col gap-4 ">
-        <h3 className="text-2xl font-bold mt-10 mb-4 text-[30px]">5-Day Forecast</h3>
-        <div className="border-2 border-[#384757] rounded-xl overflow-hidden">
+      <div className="flex flex-col gap-4">
+        <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mt-6 sm:mt-8 lg:mt-10 mb-2 sm:mb-4">5-Day Forecast</h3>
+        
+        {/* Mobile Card Layout */}
+        <div className="block sm:hidden">
+          <div className="space-y-3">
+            {forecastData.slice(1).map((day: ForecastDayData) => {
+              const dayName = new Date(day.date).toLocaleDateString("en-US", {
+                weekday: "short",
+              });
+              const unit = isCelsius ? "°C" : "°F";
+              return (
+                <div key={day.date} className="bg-[#26303B] rounded-xl p-4 flex items-center justify-between">
+                  <div className="flex-1">
+                    <div className="font-medium text-sm">{dayName}</div>
+                    <div className="text-xs text-[#99ABBD] capitalize mt-1">{day.weather.description}</div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="text-sm font-bold text-right">
+                      {isCelsius ? Math.ceil(day.maxTempC) : Math.ceil(day.maxTempF)}{unit} /
+                      {isCelsius ? Math.floor(day.minTempC) : Math.floor(day.minTempF)}{unit}
+                    </div>
+                    <img
+                      src={day.weather.icon}
+                      alt={day.weather.description}
+                      className="w-8 h-8"
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Tablet and Desktop Table Layout */}
+        <div className="hidden sm:block border-2 border-[#384757] rounded-xl overflow-hidden">
           <div className="grid grid-cols-4">
-            <div className="p-6 bg-[#1C2129] text-sm sm:text-base font-medium border-b border-[#E5E8EB]">Day</div>
-            <div className="p-6 bg-[#1C2129] text-sm sm:text-base font-medium border-b border-[#E5E8EB]">High/Low</div>
-            <div className="p-6 bg-[#1C2129] text-sm sm:text-base font-medium border-b border-[#E5E8EB]">Condition</div>
-            <div className="p-6 bg-[#1C2129] text-sm sm:text-base font-medium border-b border-[#E5E8EB]"> </div>
+            <div className="p-3 sm:p-4 lg:p-6 bg-[#1C2129] text-xs sm:text-sm lg:text-base font-medium border-b border-[#E5E8EB]">Day</div>
+            <div className="p-3 sm:p-4 lg:p-6 bg-[#1C2129] text-xs sm:text-sm lg:text-base font-medium border-b border-[#E5E8EB]">High/Low</div>
+            <div className="p-3 sm:p-4 lg:p-6 bg-[#1C2129] text-xs sm:text-sm lg:text-base font-medium border-b border-[#E5E8EB]">Condition</div>
+            <div className="p-3 sm:p-4 lg:p-6 bg-[#1C2129] text-xs sm:text-sm lg:text-base font-medium border-b border-[#E5E8EB]"> </div>
           
             {/* Forecast Rows */}
             {forecastData.slice(1).map((day: ForecastDayData, i: number) => {
@@ -87,21 +120,21 @@ export default function ForecastTable({ cityName, isCelsius }: ForecastTableProp
               const unit = isCelsius ? "°C" : "°F";
               return (
                  <React.Fragment key={day.date}>
-                  <div className={`p-5 md:p-6 text-sm sm:text-base ${i > 0 ? 'border-t border-[#E5E8EB]' : ''}`}>
+                  <div className={`p-3 sm:p-4 lg:p-6 text-xs sm:text-sm lg:text-base ${i > 0 ? 'border-t border-[#E5E8EB]' : ''}`}>
                     {dayName}
                   </div>
-                  <div className={`p-5 sm:p-5 md:p-6 text-sm sm:text-base  text-[#99ABBD] ${i > 0 ? 'border-t border-[#E5E8EB]' : ''}`}>
+                  <div className={`p-3 sm:p-4 lg:p-6 text-xs sm:text-sm lg:text-base text-[#99ABBD] ${i > 0 ? 'border-t border-[#E5E8EB]' : ''}`}>
                     {isCelsius ? Math.ceil(day.maxTempC) : Math.ceil(day.maxTempF)}{unit} /
                     {isCelsius ? Math.floor(day.minTempC) : Math.floor(day.minTempF)}{unit}
                   </div>
-                  <div className={`p-5 sm:p-5 md:p-6 capitalize text-sm sm:text-base  text-[#99ABBD] ${i > 0 ? 'border-t border-[#E5E8EB]' : ''}`}>
+                  <div className={`p-3 sm:p-4 lg:p-6 capitalize text-xs sm:text-sm lg:text-base text-[#99ABBD] ${i > 0 ? 'border-t border-[#E5E8EB]' : ''}`}>
                     {day.weather.description}
                   </div>
-                  <div className={`p-5 sm:p-5 md:p-6 hidden sm:flex items-end justify-end ${i > 0 ? 'border-t border-[#E5E8EB]' : ''}`}>
+                  <div className={`p-3 sm:p-4 lg:p-6 flex items-end justify-end ${i > 0 ? 'border-t border-[#E5E8EB]' : ''}`}>
                     <img
                       src={day.weather.icon} 
                       alt={day.weather.description}
-                      className="w-10 h-10 lg:w-[40px] lg:h-[40px] md:w-10 md:h-10"
+                      className="w-8 h-8 sm:w-10 sm:h-10 lg:w-10 lg:h-10"
                     />
                   </div>
                 </React.Fragment>

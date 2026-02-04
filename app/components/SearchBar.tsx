@@ -117,9 +117,9 @@ export default function SearchBar({ onCitySelect }: SearchBarProps) {
 
   return (
     <div className="relative w-full">
-      <div className="flex items-center bg-[#26303B] rounded-2xl h-[60px] px-4 sm:px-8 w-full">
-        <button onClick={handleSearch} disabled={isLocating} className="mr-4 text-[#99ABBD]">
-          <FontAwesomeIcon icon={faMagnifyingGlass} />
+      <div className="flex items-center bg-[#26303B] rounded-2xl h-12 sm:h-14 lg:h-[60px] px-3 sm:px-4 lg:px-6 w-full">
+        <button onClick={handleSearch} disabled={isLocating} className="mr-2 sm:mr-3 lg:mr-4 text-[#99ABBD]">
+          <FontAwesomeIcon icon={faMagnifyingGlass} className="text-sm sm:text-base lg:text-lg" />
         </button>
 
         <input
@@ -129,26 +129,26 @@ export default function SearchBar({ onCitySelect }: SearchBarProps) {
           onFocus={() => query.trim() && setShowSuggestions(true)}
           disabled={isLocating}
           placeholder="Search for a city"
-          className="w-full bg-transparent outline-none text-[#99ABBD] text-[16px] sm:text-[19px]"
+          className="w-full bg-transparent outline-none text-[#99ABBD] text-sm sm:text-base lg:text-[16px] placeholder:text-sm sm:placeholder:text-base lg:placeholder:text-[16px]"
         />
 
         <button
           onClick={handleLocationSearch}
           disabled={isLocating}
-          className="ml-4 text-[#99ABBD] hover:text-white"
+          className="ml-2 sm:ml-3 lg:ml-4 text-[#99ABBD] hover:text-white"
         >
           <FontAwesomeIcon
             icon={faLocationCrosshairs}
-            className={isLocating ? "animate-pulse text-blue-400" : "cursor-pointer"}
+            className={`text-sm sm:text-base lg:text-lg ${isLocating ? "animate-pulse text-blue-400" : "cursor-pointer"}`}
           />
         </button>
       </div>
 
       {showSuggestions && (
-        <div className="absolute top-[70px] left-0 right-0 bg-[#26303B] rounded-2xl shadow-lg z-50 max-h-[300px] overflow-y-auto">
-          {isSearching && <div className="px-4 py-3 text-[#99ABBD]">Searching...</div>}
+        <div className="absolute top-14 sm:top-[70px] left-0 right-0 bg-[#26303B] rounded-2xl shadow-lg z-50 max-h-[250px] sm:max-h-[300px] overflow-y-auto">
+          {isSearching && <div className="px-3 sm:px-4 py-2 sm:py-3 text-[#99ABBD] text-sm sm:text-base">Searching...</div>}
           {!isSearching && suggestions.length === 0 && (
-            <div className="px-4 py-3 text-[#99ABBD]">No cities found</div>
+            <div className="px-3 sm:px-4 py-2 sm:py-3 text-[#99ABBD] text-sm sm:text-base">No cities found</div>
           )}
 
           {!isSearching &&
@@ -156,14 +156,14 @@ export default function SearchBar({ onCitySelect }: SearchBarProps) {
               <div
                 key={suggestion.id}
                 onClick={() => handleSuggestionSelect(suggestion)}
-                className={`px-4 py-3 cursor-pointer transition-colors ${
+                className={`px-3 sm:px-4 py-2 sm:py-3 cursor-pointer transition-colors ${
                   index === activeIndex
                     ? "bg-[#1C2129] text-white"
                     : "hover:bg-[#1C2129] text-[#99ABBD]"
                 }`}
               >
-                <div className="font-medium">{suggestion.name}</div>
-                <div className="text-sm text-[#6B7A8F]">
+                <div className="font-medium text-sm sm:text-base">{suggestion.name}</div>
+                <div className="text-xs sm:text-sm text-[#6B7A8F]">
                   {suggestion.region}, {suggestion.country}
                 </div>
               </div>

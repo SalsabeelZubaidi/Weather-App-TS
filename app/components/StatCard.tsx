@@ -64,13 +64,13 @@ export default function StatCard({ cityName, isCelsius }: StatCardProps) { //the
   
   if (!cityName || cityName.trim() === "") {
     return (
-      <div className="relative w-full h-[290px] sm:h-[400px] md:h-[450px] flex items-center justify-center mt-[-20px] sm:mt-[-30px] md:mt-[-40px]">
+      <div className="relative w-full h-64 sm:h-80 md:h-96 lg:h-[400px] flex items-center justify-center mt-0 sm:mt-[-20px] md:mt-[-30px] lg:mt-[-40px]">
         <Lottie
           animationData={LandingPageAnim}
           loop
-          className="absolute inset-0 w-full h-full opacity-70 "
+          className="absolute inset-0 w-full h-full opacity-70"
         />
-        <p className="text-xl lg:text-2xl relative z-10 text-center font-bold sm:text-sm md:text-3xl lg:text-4xl text-amber-50 px-4">
+        <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl relative z-10 text-center font-bold text-amber-50 px-4">
           What's the weather like today?
           <br />
           Type a city to find out!
@@ -81,12 +81,12 @@ export default function StatCard({ cityName, isCelsius }: StatCardProps) { //the
 
   if (loading) return <StatCardSkeleton />;
   if (error) return (
-    <h1 className="text-center mt-20 sm:mt-32 md:mt-40 font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl px-4">
+    <h1 className="text-center mt-12 sm:mt-16 md:mt-20 lg:mt-24 font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl px-4">
       CITY NOT FOUND
     </h1>
   );
   if (!weatherData) return (
-    <p className="text-center mt-10 sm:mt-16 md:mt-20 font-bold text-xl sm:text-2xl md:text-3xl px-4">
+    <p className="text-center mt-8 sm:mt-12 md:mt-16 lg:mt-20 font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl px-4">
       No data available for this city.
     </p>
   );
@@ -111,32 +111,34 @@ export default function StatCard({ cityName, isCelsius }: StatCardProps) { //the
   ];
   return (
     <>
-      <div className="flex justify-center pt-5 sm:pt-16 lg:pt-10 px-4">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-bold text-center">
+      <div className="flex justify-center pt-4 sm:pt-6 lg:pt-8 px-4">
+        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center">
           {weatherData?.location?.name}, {weatherData?.location?.country}
         </h1>
       </div>
 
-      <div className="flex flex-col sm:flex-row justify-center items-center px-4 pb-6 sm:pb-8 md:pb-12 gap-3 sm:gap-6 md:gap-10">
+      <div className="flex flex-col sm:flex-row justify-center items-center px-4 pb-4 sm:pb-6 lg:pb-8 gap-3 sm:gap-4 md:gap-6">
         <img
           src={weatherData?.weather?.icon}
-          className="w-16 h-16 lg:w-16 lg:h-16 md:w-24 md:h-24"
+          className="w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-13"
           alt={weatherData?.weather?.description}
         />
-        <span className="text-base sm:text-lg md:text-xl lg:text-[24px] text-center">
+        <span className="text-sm sm:text-base md:text-lg lg:text-xl text-center max-w-md">
           {weatherData?.weather?.description} with a high of {isCelsius? Math.round(weatherData?.tempC) : Math.round(weatherData?.tempF)}{unit}
         </span>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-7 justify-center">
-        {stats.map((stat) => (
+      <div className="grid grid-cols-2 gap-5 sm:grid-cols-2 lg:grid-cols-3 ">
+        {stats.map((stat, index) => (
           <div
             key={stat.title}
-            className="flex flex-col items-start p-4 sm:p-6 lg:p-8 bg-[#26303B] w-full lg:max-w-[455px] min-h-[170px] sm:min-h-[190px] rounded-2xl gap-3 sm:gap-4"
+            className={`flex flex-col items-start p-7 bg-[#26303B] min-h-[120px] rounded-2xl gap-2${
+              index === 2 ? 'col-span-2 sm:col-span-1' : ''
+            }`}
           >
-            <h4 className="text-lg sm:text-[22px]">{stat.title}</h4>
-            <h3 className="text-2xl sm:text-[28px] font-bold leading-tight">{stat.value}</h3>
-            <h5 className="text-sm sm:text-[16px] text-[#99ABBD]">{stat.label}</h5>
+            <h4 className="text-lg font-medium">{stat.title}</h4>
+            <h3 className="text-2xl font-bold leading-tight">{stat.value}</h3>
+            <h5 className="text-sm text-[#99ABBD]">{stat.label}</h5>
           </div>
         ))}
       </div>
