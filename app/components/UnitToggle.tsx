@@ -12,7 +12,7 @@ export default function UnitToggle({ isCelsius, setIsCelsius }: UnitToggleProps)
     <div>
       <button
         onClick={handleToggle}
-        className="cursor-pointer text-xl mr-3 font-bold"
+        className="cursor-pointer text-xl mr-3 font-semibold hover:text-gray-400"
       >
         {isCelsius ? "°C" : "°F"}
       </button>

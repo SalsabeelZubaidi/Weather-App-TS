@@ -9,7 +9,8 @@ interface WeatherData {
   tempC: number;
   tempF: number;
   humidity: number;
-  wind: number;
+  windmph: number;
+  windkph: number;
   feels_like_C: number;
   feels_like_F: number;
   weather: {
@@ -33,6 +34,8 @@ export default function StatCard({ cityName, isCelsius }: StatCardProps) { //the
   const [error, setError] = useState<string>("");
 
   const unit = isCelsius ? "°C" : "°F";
+  const windUnit = isCelsius ? "km/h" : "mph";
+
 
   // Fetch weather when cityName changes
   useEffect(() => {
@@ -96,7 +99,8 @@ export default function StatCard({ cityName, isCelsius }: StatCardProps) { //the
     },
     { 
       title: "Wind", 
-      value: `${Math.round(weatherData?.wind)} mph`, 
+      // value: `${Math.round(weatherData?.wind)} mph`, 
+      value:  `${isCelsius ? Math.round(weatherData?.windmph) : Math.round(weatherData?.windkph)} ${windUnit}`,
       label: "wind" 
     },
     { 
@@ -116,11 +120,11 @@ export default function StatCard({ cityName, isCelsius }: StatCardProps) { //the
       <div className="flex flex-col sm:flex-row justify-center items-center px-4 pb-6 sm:pb-8 md:pb-12 gap-3 sm:gap-6 md:gap-10">
         <img
           src={weatherData?.weather?.icon}
-          className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-auto lg:h-auto"
+          className="w-16 h-16 lg:w-16 lg:h-16 md:w-24 md:h-24"
           alt={weatherData?.weather?.description}
         />
         <span className="text-base sm:text-lg md:text-xl lg:text-[24px] text-center">
-          {weatherData?.weather?.description} with a temperature of {isCelsius? Math.round(weatherData?.tempC) : Math.round(weatherData?.tempF)}{unit}
+          {weatherData?.weather?.description} with a high of {isCelsius? Math.round(weatherData?.tempC) : Math.round(weatherData?.tempF)}{unit}
         </span>
       </div>
 
