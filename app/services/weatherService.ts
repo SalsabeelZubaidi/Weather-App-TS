@@ -13,7 +13,8 @@ interface CurrentWeatherData {
   tempC: number;
   tempF: number;
   humidity: number;
-  wind: number;
+  windmph: number;
+  windkph: number;
   feels_like_C: number;
   feels_like_F: number;
   weather: WeatherData;
@@ -34,16 +35,17 @@ interface WeatherResponse {
   current: CurrentWeatherData;
 }
 
-// Map weather conditions to static image filenames
 function getWeatherImage(condition: string): string {
   const lowerCaseCondition = condition.toLowerCase();
   
   if (lowerCaseCondition.includes('sunny') || lowerCaseCondition.includes('clear')) {
     return '/images/weatherState/sunny.png';
   } else if (lowerCaseCondition.includes('partly cloudy') || lowerCaseCondition.includes('overcast') || lowerCaseCondition.includes('cloudy')) {
-    return '/images/weatherState/tt.png';
+    return '/images/weatherState/cloud.png';
   } else if (lowerCaseCondition.includes('rain') || lowerCaseCondition.includes('drizzle') || lowerCaseCondition.includes('shower')) {
     return '/images/weatherState/rainy.png';
+  } else if (lowerCaseCondition.includes('Heavy') && lowerCaseCondition.includes('rain')) {
+    return '/images/weatherState/heavyRain.png';
   } else if (lowerCaseCondition.includes('snow') || lowerCaseCondition.includes('sleet')) {
     return '/images/weatherState/snowy.png';
   } else if (lowerCaseCondition.includes('thunder') || lowerCaseCondition.includes('lightning')) {
@@ -93,7 +95,8 @@ export async function fetchWeather(city: string, days: number = 5): Promise<Weat
       tempC: data.current.temp_c,
       tempF: data.current.temp_f,
       humidity: data.current.humidity,
-      wind: data.current.wind_mph,
+      windmph: data.current.wind_mph,
+      windkph: data.current.wind_kph,
       feels_like_C: data.current.feelslike_c,
       feels_like_F: data.current.feelslike_f,
 

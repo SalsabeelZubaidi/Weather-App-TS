@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-// import ForecastRow from "./ForecastRow";
 import ForecastTableSkeleton from "./ForecastTableSkeleton";
 import { fetchWeather } from "../services/weatherService";
 import Lottie from "lottie-react";
@@ -74,11 +73,11 @@ export default function ForecastTable({ cityName, isCelsius }: ForecastTableProp
       <div className="flex flex-col gap-4 ">
         <h3 className="text-2xl font-bold mt-10 mb-4 text-[30px]">5-Day Forecast</h3>
         <div className="border-2 border-[#384757] rounded-xl overflow-hidden">
-          <div className="grid grid-cols-4 ">
-            <div className="p-4 bg-[#1C2129] text-sm sm:text-base font-medium border-b border-[#E5E8EB]">Day</div>
-            <div className="p-4 bg-[#1C2129] text-sm sm:text-base font-medium border-b border-[#E5E8EB]">High/Low</div>
-            <div className="p-4 bg-[#1C2129] text-sm sm:text-base font-medium border-b border-[#E5E8EB]">Condition</div>
-            <div className="p-4 bg-[#1C2129] text-sm sm:text-base font-medium border-b border-[#E5E8EB]"> </div>
+          <div className="grid grid-cols-4">
+            <div className="p-6 bg-[#1C2129] text-sm sm:text-base font-medium border-b border-[#E5E8EB]">Day</div>
+            <div className="p-6 bg-[#1C2129] text-sm sm:text-base font-medium border-b border-[#E5E8EB]">High/Low</div>
+            <div className="p-6 bg-[#1C2129] text-sm sm:text-base font-medium border-b border-[#E5E8EB]">Condition</div>
+            <div className="p-6 bg-[#1C2129] text-sm sm:text-base font-medium border-b border-[#E5E8EB]"> </div>
           
             {/* Forecast Rows */}
             {forecastData.slice(1).map((day: ForecastDayData, i: number) => {
@@ -88,21 +87,21 @@ export default function ForecastTable({ cityName, isCelsius }: ForecastTableProp
               const unit = isCelsius ? "°C" : "°F";
               return (
                  <React.Fragment key={day.date}>
-                  <div className={`p-3 sm:p-3 md:p-4 text-sm sm:text-base ${i > 0 ? 'border-t border-[#E5E8EB]' : ''}`}>
+                  <div className={`p-5 md:p-6 text-sm sm:text-base ${i > 0 ? 'border-t border-[#E5E8EB]' : ''}`}>
                     {dayName}
                   </div>
-                  <div className={`p-3 sm:p-3 md:p-4 text-sm sm:text-base  text-[#99ABBD] ${i > 0 ? 'border-t border-[#E5E8EB]' : ''}`}>
+                  <div className={`p-5 sm:p-5 md:p-6 text-sm sm:text-base  text-[#99ABBD] ${i > 0 ? 'border-t border-[#E5E8EB]' : ''}`}>
                     {isCelsius ? Math.ceil(day.maxTempC) : Math.ceil(day.maxTempF)}{unit} /
                     {isCelsius ? Math.floor(day.minTempC) : Math.floor(day.minTempF)}{unit}
                   </div>
-                  <div className={`p-3 sm:p-3 md:p-4 capitalize text-sm sm:text-base  text-[#99ABBD] ${i > 0 ? 'border-t border-[#E5E8EB]' : ''}`}>
+                  <div className={`p-5 sm:p-5 md:p-6 capitalize text-sm sm:text-base  text-[#99ABBD] ${i > 0 ? 'border-t border-[#E5E8EB]' : ''}`}>
                     {day.weather.description}
                   </div>
-                  <div className={`p-3 sm:p-3 md:p-4 hidden sm:flex items-end justify-end ${i > 0 ? 'border-t border-[#E5E8EB]' : ''}`}>
+                  <div className={`p-5 sm:p-5 md:p-6 hidden sm:flex items-end justify-end ${i > 0 ? 'border-t border-[#E5E8EB]' : ''}`}>
                     <img
                       src={day.weather.icon} 
                       alt={day.weather.description}
-                      className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10"
+                      className="w-10 h-10 lg:w-[40px] lg:h-[40px] md:w-10 md:h-10"
                     />
                   </div>
                 </React.Fragment>
