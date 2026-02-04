@@ -1,40 +1,61 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SearchBar from "./components/SearchBar";
 import StatCard from "./components/StatCard";
 import ForecastTable from "./components/ForecastTable";
-import UnitToggle from "./components/UnitToggle"
+import UnitToggle from "./components/UnitToggle";
+import { getUserLocation, formatCoordinates } from "./services/locationService";
 
 
 export default function Home() {
   const [selectedCity, setSelectedCity] = useState<string>(""); 
-  // const [checked, setChecked] = useState<boolean>(false);
+  const [locationError, setLocationError] = useState<string | null>(null);
   const [isCelsius, setIsCelsius] = useState<boolean>(true);
+
+  // to detect user's location when component mounts
+  useEffect(() => {
+    const detectLocation = async () => {
+      console.log("Attempting to get user location...");
+      try {
+        const coordinates = await getUserLocation();
+        console.log("Location obtained:", coordinates);
+        const formattedCoords = formatCoordinates(
+          coordinates.latitude,
+          coordinates.longitude
+        );
+        setSelectedCity(formattedCoords);
+      } catch (error) {
+        console.error("Location detection error:", error);
+        setLocationError(
+          error instanceof Error ? error.message : "Failed to detect location"
+        );
+        // Fallback to default city (Amman) if location detection fails
+        setSelectedCity("Amman");
+      }
+    };
+
+    detectLocation();
+  }, []);
   
-
-  // const handleChange = (): void => {
-  //   setChecked(!checked);
-  // };
-
   return (
     <>
       {/* Header */}
-      <div className="sm:pt-8 lg:pt-5 px-2 sm:px-5 pb-4 sm:pb-5">
+      <div className="lg:px-1 lg:py-3">
         <div className="mx-auto w-full flex flex-wrap justify-between pl-10 pr-10">
-          <div className="flex flex-row gap-5 items-center">
+          <div className="flex flex-row gap-3 items-center">
             <img
               src="/images/logo.png"
               alt="Weather App"
-              className="w-[16px] h-[16px] sm:w-[16px]"
+              className="w-[13px] h-[13px] lg:w-[14px]"
             />
-            <h1 className="font-bold text-xl">Weather App</h1>
+            <h1 className="font-bold text-l">Weather App</h1>
           </div>
           
           <div className="flex items-center">
             <UnitToggle isCelsius={isCelsius} setIsCelsius={setIsCelsius} />
             <img
               src="/images/thermo.png"
-              className="mr-0 sm:mr-5 w-[20px] sm:w-[25px] h-[20px] sm:h-[25px]"
+              className="lg:w-[20px] lg:h-[20px]"
             />
           </div>
         </div>
@@ -52,7 +73,7 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="p-6 sm:p-8 lg:p-10 flex justify-center text-[16px] sm:text-lg lg:text-[20px] text-[#99ABBD] px-4">
+      <footer className="p-6 sm:p-8 lg:p-10 flex justify-center text-[16px] sm:text-lg lg:text-[16px] text-[#99ABBD] px-4">
         © 2026 Weather App. All rights reserved.
       </footer>
     </>
