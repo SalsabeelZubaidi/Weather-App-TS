@@ -57,9 +57,8 @@ export default function ForecastTable({ cityName, isCelsius }: ForecastTableProp
 
   if (error) return (
     <div className="flex flex-col items-center mt-10">
-      <Lottie animationData={notFoundAnim} loop className="h-64 w-64" />
-      <p className="mt-4 text-center font-bold text-xl text-red-500">
-        {error}
+      <p className="mt-4 text-center font-bold text-xl text-amber-50">
+        Please Try Again
       </p>
     </div>
   );
