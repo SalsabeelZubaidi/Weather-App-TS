@@ -59,7 +59,7 @@ function getWeatherImage(condition: string): string {
   }
 }
 
-export async function fetchWeather(city: string, days: number = 5): Promise<WeatherResponse> {
+export async function fetchWeather(city: string, days: number = 6): Promise<WeatherResponse> {
   try {
     const origin = typeof window !== "undefined" ? window.location.origin : "";
     const url = `${origin}/api/weather?city=${city}&days=${days}`;

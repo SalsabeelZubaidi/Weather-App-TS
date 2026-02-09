@@ -24,7 +24,7 @@ export default function SearchBar({ onCitySelect }: SearchBarProps) {
   const [activeIndex, setActiveIndex] = useState(-1);
 
   useEffect(() => {
-    if (query.trim().length < 2) {
+    if (query.trim().length < 2) { //if the user input is too short clear suggestions and hides the dropdown
       setSuggestions([]);
       setShowSuggestions(false);
       setActiveIndex(-1);
@@ -36,8 +36,8 @@ export default function SearchBar({ onCitySelect }: SearchBarProps) {
       try {
         const res = await fetch(`/api/search?q=${encodeURIComponent(query.trim())}`);
         const data = await res.json();
-        setSuggestions(data.suggestions || []);
-        setShowSuggestions(true);
+        setSuggestions(data.suggestions);
+        setShowSuggestions(true); //show dropdown
       } catch (err) {
         console.error("Autocomplete error:", err);
         setSuggestions([]);
@@ -45,10 +45,10 @@ export default function SearchBar({ onCitySelect }: SearchBarProps) {
       } finally {
         setIsSearching(false);
       }
-    }, 300);
+    }, 300); //debounce // wait 300ms before making the fetch
 
     return () => clearTimeout(timeout);
-  }, [query]);
+  }, [query]); //runs every time the query is changed
 
 
   const handleSearch = () => {
@@ -59,14 +59,15 @@ export default function SearchBar({ onCitySelect }: SearchBarProps) {
   };
 
   const handleSuggestionSelect = (suggestion: CitySuggestion) => {
-    const locationQuery = `${suggestion.name}, ${suggestion.region}, ${suggestion.country}`;
+    const locationQuery = `${suggestion.name}, ${suggestion.region}, ${suggestion.country}`; //format suggestion
     setShowSuggestions(false);
     setSuggestions([]);
-    setActiveIndex(-1);
+    setActiveIndex(-1); //tracks which suggestion is highlighted //-1 means nothing is highlighted
     setQuery(""); 
     onCitySelect(locationQuery);
   };
 
+  ///locate user locataion //Geolocation
   const handleLocationSearch = async () => {
     setIsLocating(true);
     try {
@@ -82,6 +83,7 @@ export default function SearchBar({ onCitySelect }: SearchBarProps) {
     }
   };
 
+  ///handle key arrows movement
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (!showSuggestions || suggestions.length === 0) {
       if (e.key === "Enter") handleSearch();

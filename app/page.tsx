@@ -30,7 +30,7 @@ export default function Home() {
           error instanceof Error ? error.message : "Failed to detect location"
         );
         // Fallback to default city (Amman) if location detection fails
-        setSelectedCity("Amman");
+        // setSelectedCity("Amman");
       }
     };
 
@@ -40,15 +40,15 @@ export default function Home() {
   return (
     <>
       {/* Header */}
-      <div className="px-4 py-3 sm:px-6 sm:py-4 lg:px-8 lg:py-5">
+      <div className="px-4 py-3 sm:px-6 sm:py-4 lg:px-8 lg:py-2">
         <div className="mx-auto w-full flex flex-wrap justify-between items-center">
           <div className="flex flex-row gap-2 sm:gap-3 items-center">
             <img
               src="/images/logo.png"
               alt="Weather App"
-              className="w-3 h-3 sm:w-4 sm:h-4 lg:w-[14px] lg:h-[14px]"
+              className="w-2 h-2 lg:w-[12px] lg:h-[12px] md:w-[10px] md:h-[10px]"
             />
-            <h1 className="font-bold text-sm sm:text-base lg:text-lg">Weather App</h1>
+            <h1 className="font-bold text-xs lg:text-md md:text-sm">Weather App</h1>
           </div>
           
           <div className="flex items-center gap-2 sm:gap-3">
@@ -73,7 +73,7 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="p-4 sm:p-6 lg:p-8 flex justify-center text-xs lg:text-sm md:text-sm text-[#99ABBD] px-4">
+      <footer className="p-4 sm:p-2 lg:p-4 flex justify-center text-xs lg:text-sm md:text-sm text-[#99ABBD] px-4">
         © 2026 Weather App. All rights reserved.
       </footer>
     </>

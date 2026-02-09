@@ -4,15 +4,15 @@ const API_KEY = process.env.GEOAPIFY_API_KEY;
 
 export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
+    const { searchParams } = new URL(request.url); //parse the URL and extract query parameters.
     const query = searchParams.get("q");
 
-    if (!query || query.trim().length < 2) {
+    if (!query || query.trim().length < 2) { //if the query is empty or less than 2 return empty suggestions
       return NextResponse.json({ suggestions: [] });
     }
 
     const res = await fetch(
-      `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(
+      `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent( ////It converts input string into a format that is safe to use inside a URL.
         query
       )}&limit=20&lang=en&apiKey=${API_KEY}`
     );
@@ -41,6 +41,7 @@ export async function GET(request: NextRequest) {
         country: f.properties.country,
         importance: f.properties.rank?.importance ?? 0,
       }))
+      //Remove duplicates
       .filter(
         (city: any, index: number, self: any[]) =>
           index ===
@@ -50,8 +51,8 @@ export async function GET(request: NextRequest) {
               c.country === city.country
           )
       )
-      .sort((a: any, b: any) => b.importance - a.importance)
-      .slice(0, 6);
+      .sort((a: any, b: any) => b.importance - a.importance) //Sort by importance based on Geoapify score// 0 by default
+      .slice(0, 6); //only return top 6 suggestions
 
     return NextResponse.json({ suggestions });
   } catch (error) {
