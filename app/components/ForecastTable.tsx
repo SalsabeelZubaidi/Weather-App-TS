@@ -122,14 +122,14 @@ export default function ForecastTable({ cityName, isCelsius }: ForecastTableProp
 
       {/* Desktop Layout */}
       <div className="hidden sm:block border-2 border-[#384757] rounded-xl overflow-hidden">
-        <div className="grid grid-cols-4">
-          <div className="p-3 sm:p-4 lg:p-5 bg-[#1C2129] text-xs sm:text-sm lg:text-base font-medium border-b border-[#E5E8EB]">
+        <div className="grid grid-cols-[1fr_1fr_1fr_72px]">
+          <div className="p-3 sm:p-4 lg:p-5 bg-[#1C2129] text-xs sm:text-sm lg:text-base font-medium border-b border-[#E5E8EB] text-[#E5E8EB]" >
             Day
           </div>
-          <div className="p-3 sm:p-4 lg:p-5 bg-[#1C2129] text-xs sm:text-sm lg:text-base font-medium border-b border-[#E5E8EB]">
+          <div className="p-3 sm:p-4 lg:p-5 bg-[#1C2129] text-xs sm:text-sm lg:text-base font-medium border-b border-[#E5E8EB] text-[#E5E8EB]">
             High/Low
           </div>
-          <div className="p-3 sm:p-4 lg:p-5 bg-[#1C2129] text-xs sm:text-sm lg:text-base font-medium border-b border-[#E5E8EB]">
+          <div className="p-3 sm:p-4 lg:p-5 bg-[#1C2129] text-xs sm:text-sm lg:text-base font-medium border-b border-[#E5E8EB] text-[#E5E8EB]">
             Condition
           </div>
           <div className="p-3 sm:p-4 lg:p-5 bg-[#1C2129] border-b border-[#E5E8EB]"></div>
@@ -148,12 +148,14 @@ export default function ForecastTable({ cityName, isCelsius }: ForecastTableProp
                     isCelsius ? Math.floor(day.minTempC) : Math.floor(day.minTempF)
                   }${unit}`,
                   day.weather.description,
-                  <img
+                  
+                  <img 
                     key="icon"
                     src={day.weather.icon}
                     alt={day.weather.description}
-                    className="w-8 h-8 sm:w-10 sm:h-10 lg:w-10 lg:h-10"
+                   
                   />
+                
                 ].map((content, colIndex) => (
                   <motion.div
                     key={colIndex}
@@ -164,9 +166,12 @@ export default function ForecastTable({ cityName, isCelsius }: ForecastTableProp
                       delay: i * 0.2,
                       ease: "easeOut",
                     }}
-                    className={`p-3 sm:p-4 lg:p-6 text-xs sm:text-sm lg:text-base capitalize ${
+                    className={`p-3 sm:p-4 lg:p-6 text-xs sm:text-sm lg:text-base capitalize  ${
                       i > 0 ? "border-t border-[#E5E8EB]" : ""
-                    } ${colIndex === 3 ? "flex items-end justify-end" : ""}`}
+                    }
+                      ${colIndex === 0 ? "text-[#E5E8EB]" : ""}
+                      ${colIndex === 1 || colIndex==2 ? "text-[#99ABBD] " : ""}
+                    `}
                   >
                     {content}
                   </motion.div>

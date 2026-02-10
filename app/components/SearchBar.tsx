@@ -139,10 +139,10 @@ export default function SearchBar({ onCitySelect }: SearchBarProps) {
           disabled={isLocating}
           className="ml-2 sm:ml-3 lg:ml-4 text-[#99ABBD] hover:text-white"
         >
-          <FontAwesomeIcon
+          {/* <FontAwesomeIcon
             icon={faLocationCrosshairs}
             className={`text-sm sm:text-base lg:text-lg ${isLocating ? "animate-pulse text-blue-400" : "cursor-pointer"}`}
-          />
+          /> */}
         </button>
       </div>
 
