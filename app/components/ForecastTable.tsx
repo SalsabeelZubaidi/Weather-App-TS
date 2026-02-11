@@ -132,7 +132,7 @@ export default function ForecastTable({ cityName, isCelsius }: ForecastTableProp
           <div className="p-3 sm:p-4 lg:p-5 bg-[#1C2129] text-xs sm:text-sm lg:text-base font-medium border-b border-[#E5E8EB] text-[#E5E8EB]">
             Condition
           </div>
-          <div className="p-3 sm:p-4 lg:p-5 bg-[#1C2129] border-b border-[#E5E8EB]"></div>
+          <div className="p-3 lg:p-5 bg-[#1C2129] border-b border-[#E5E8EB]"></div>
 
           {forecastData.slice(1).map((day: ForecastDayData, i: number) => {
             const dayName = new Date(day.date).toLocaleDateString("en-US", {
@@ -148,13 +148,13 @@ export default function ForecastTable({ cityName, isCelsius }: ForecastTableProp
                     isCelsius ? Math.floor(day.minTempC) : Math.floor(day.minTempF)
                   }${unit}`,
                   day.weather.description,
-                  
-                  <img 
-                    key="icon"
-                    src={day.weather.icon}
-                    alt={day.weather.description}
-                   
-                  />
+                  <div className="h-[40px] w-[40px]">
+                    <img 
+                        key="icon"
+                        src={day.weather.icon}
+                        alt={day.weather.description}
+                      />
+                  </div>
                 
                 ].map((content, colIndex) => (
                   <motion.div
@@ -168,7 +168,7 @@ export default function ForecastTable({ cityName, isCelsius }: ForecastTableProp
                     }}
                     className={`p-3 sm:p-4 lg:p-6 text-xs sm:text-sm lg:text-base capitalize  ${
                       i > 0 ? "border-t border-[#E5E8EB]" : ""
-                    }
+                    } 
                       ${colIndex === 0 ? "text-[#E5E8EB]" : ""}
                       ${colIndex === 1 || colIndex==2 ? "text-[#99ABBD] " : ""}
                     `}
